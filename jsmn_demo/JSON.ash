@@ -26,8 +26,10 @@ managed struct JsonToken {
   int end;
   int size;
   int parent;
+  import String ToString(String json_string);
+  import readonly attribute String TypeAsString;
 
-  import static JsonToken* [] NewArray(int count); // $AUTOCOMPLETESTATICONLY$ 
+  import static JsonToken* [] NewArray(int count); // $AUTOCOMPLETESTATICONLY$
 };
 
 /// JSON parser, stores the current position in the string being parsed.
@@ -39,5 +41,5 @@ managed struct JsonParser {
   /// superior token node, e.g. parent object or array
   int toksuper;
   /// Parses a JSON data string into and array of tokens, each describing a single JSON object. Negative return is a JsonError, otherwise it's the number of used tokens.
-  import int Parse(String js, JsonToken *tokens[], int num_tokens);
+  import int Parse(String json_string, JsonToken *tokens[], int num_tokens);
 };
