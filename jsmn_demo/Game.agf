@@ -4613,7 +4613,7 @@
           <ScriptAndHeader>
             <ScriptAndHeader_Header>
               <Script>
-                <FileName>jsmn.ash</FileName>
+                <FileName>JSON.ash</FileName>
                 <Name />
                 <Description />
                 <Author />
@@ -4624,7 +4624,7 @@
             </ScriptAndHeader_Header>
             <ScriptAndHeader_Script>
               <Script>
-                <FileName>jsmn.asc</FileName>
+                <FileName>JSON.asc</FileName>
                 <Name />
                 <Description />
                 <Author />
