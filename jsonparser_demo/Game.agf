@@ -3,8 +3,8 @@
 <AGSEditorDocument Version="3.0.3.2" VersionIndex="25" EditorVersion="3.5.0.22">
   <Game>
     <Settings>
-      <GameFileName>MiniJsonParser</GameFileName>
-      <GameName>MiniJsonParser</GameName>
+      <GameFileName>jsonparser_demo</GameFileName>
+      <GameName>jsonparser_demo</GameName>
       <UniqueID>389559</UniqueID>
       <GUIDAsString>{4d30bb0e-581a-4641-8fc0-74ee449fec78}</GUIDAsString>
       <ColorDepth>TrueColor</ColorDepth>
@@ -68,15 +68,15 @@
       <DefaultRoomMaskResolution>1</DefaultRoomMaskResolution>
       <GameExplorerEnabled>False</GameExplorerEnabled>
       <Description />
-      <ReleaseDate>2018-01-01</ReleaseDate>
+      <ReleaseDate>2021-02-28</ReleaseDate>
       <Genre>Adventure</Genre>
-      <Version>1.0.0.0</Version>
+      <Version>0.1.0.0</Version>
       <WindowsExperienceIndex>1</WindowsExperienceIndex>
       <DeveloperName />
       <DeveloperURL />
       <EnhancedSaveGames>False</EnhancedSaveGames>
       <SaveGameFileExtension />
-      <SaveGameFolderName>MiniJsonParser</SaveGameFolderName>
+      <SaveGameFolderName>jsonparser_demo</SaveGameFolderName>
       <BinaryFilesInSourceControl>False</BinaryFilesInSourceControl>
       <AudioIndexer>0</AudioIndexer>
       <BuildTargets xml:space="preserve">Windows, Linux</BuildTargets>
@@ -4617,7 +4617,7 @@
           <ScriptAndHeader>
             <ScriptAndHeader_Header>
               <Script>
-                <FileName>MiniJsonParser.ash</FileName>
+                <FileName>jsonparser.ash</FileName>
                 <Name />
                 <Description />
                 <Author />
@@ -4628,11 +4628,11 @@
             </ScriptAndHeader_Header>
             <ScriptAndHeader_Script>
               <Script>
-                <FileName>MiniJsonParser.asc</FileName>
-                <Name />
-                <Description />
-                <Author />
-                <Version />
+                <FileName>jsonparser.asc</FileName>
+                <Name>jsonparser</Name>
+                <Description>A minimal json parser for ags.</Description>
+                <Author>eri0o</Author>
+                <Version>0.1.0</Version>
                 <Key>1002780478</Key>
                 <IsHeader>False</IsHeader>
               </Script>

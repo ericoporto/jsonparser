@@ -1,4 +1,5 @@
-// JSON Module Header
+// JSON Parser Module Header
+//       jsonparser 0.1.0
 
  /// JSON type identifier.
  enum JsonTokenType {
@@ -29,7 +30,9 @@ managed struct JsonToken {
   int size;
   /// if it's a child, position of the parent in the token array
   int parent;
+  /// pass the json_string that was parsed and generated this token to recover the string this token refers to
   import String ToString(String json_string);
+  /// Utility function for debugging
   import readonly attribute String TypeAsString;
   /// Helper to ease Token Array creation. Ex: JsonToken* t[] = JsonToken.NewArray(token_count);
   import static JsonToken* [] NewArray(int count); // $AUTOCOMPLETESTATICONLY$
@@ -43,12 +46,10 @@ managed struct JsonParser {
   int toknext;
   /// superior token node, e.g. parent object or array
   int toksuper;
-
   /// Parses a JSON data string into and array of tokens, each describing a single JSON object. Negative return is a JsonError, otherwise it's the number of used tokens.
   import int Parse(String json_string, JsonToken *tokens[], int num_tokens);
-
+  /// Marks the parser for reset, useful if you want to use it again with a different file. Reset only actually happens when Parse is called.
   import void Reset();
-
   protected bool _IsNotReset;
 };
 
@@ -61,6 +62,7 @@ enum MiniJsonParserState {
   eJP_StateMAX
 };
 
+
 struct MiniJsonParser {
   //import readonly attribute EasyJsonParserState State;
 
@@ -69,15 +71,19 @@ struct MiniJsonParser {
   import readonly attribute String CurrentTokenAsString;
   import readonly attribute JsonTokenType CurrentTokenType;
   import readonly attribute int CurrentTokenSize;
-  import readonly attribute MiniJsonParserState State;
-  import readonly attribute String FullKey;
+  import readonly attribute MiniJsonParserState CurrentState;
+  import readonly attribute String CurrentFullKey;
+  import readonly attribute bool CurrentTokenIsLeaf;
 
+  // a bunch of protected things to hide the complexity of simplicity
   protected String _JsonString;
   protected MiniJsonParserState _State;
   protected int _TokenCount;
   protected JsonToken* _Tokens[];
   protected int _itok;
   protected int _ichildren;
+
+  import protected String _print_children();
   protected int _stk_children_idx;
   protected int _stk_children[32];
   protected int _stk_type[32];
@@ -86,14 +92,14 @@ struct MiniJsonParser {
   import protected JsonTokenType _stk_type_head_get();
   import protected int _stk_children_pop();
   import protected int _stk_children_head_get();
-  import protected void _stk_children_head_set(int value);
+  import protected void _stk_children_head_decr();
 
+  import protected String _print_keyidx();
   protected int _stk_keyidx_idx;
   import protected void _stk_keyidx_push(String keyidx);
   import protected void _stk_keyidx_pop();
   import protected void _stk_keyidx_increment();
   import protected String _stk_keyidx_tostring();
-  protected int _stk_keyidx_schpop;
 
   protected int _next_itok;
   protected int _next_ichildren;
