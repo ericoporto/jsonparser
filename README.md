@@ -1,6 +1,6 @@
 # jsmnags
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ub23w5v2ga96us0m/branch/master?svg=true)](https://ci.appveyor.com/project/ericoporto/jsonparser/branch/main)
+[![Build status](https://ci.appveyor.com/api/projects/status/ub23w5v2ga96us0m/branch/main?svg=true)](https://ci.appveyor.com/project/ericoporto/jsonparser/branch/main)
 
 JSMN, a JSON minimal parser, ported for Adventure Game Studio.
 
