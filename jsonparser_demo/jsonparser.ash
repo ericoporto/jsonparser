@@ -62,20 +62,26 @@ enum MiniJsonParserState {
   eJP_StateMAX
 };
 
-
 struct MiniJsonParser {
-  //import readonly attribute EasyJsonParserState State;
-
+  /// Initialize the parser passing a JSON as a string.
   import void Init(String json_string);
+  /// Advances to the next token. Returns false if no tokens left.
   import bool NextToken();
+  /// The current token content, as a String.
   import readonly attribute String CurrentTokenAsString;
+  /// The current token type.
   import readonly attribute JsonTokenType CurrentTokenType;
+  /// The current token size, 0 if it's a leaf value, 1 or bigger if it's a key or object/array.
   import readonly attribute int CurrentTokenSize;
+  /// The current state of our mini parser. Helps understanding the JSON tokens we got when parsing.
   import readonly attribute MiniJsonParserState CurrentState;
+  /// Gets the current dot separated key.
   import readonly attribute String CurrentFullKey;
+  /// Checks if the state and key type currently are a leaf. True if it's, usually leafs are the interesting tokens we want when parsing.
   import readonly attribute bool CurrentTokenIsLeaf;
 
   // a bunch of protected things to hide the complexity of simplicity
+  // these are not accessible to the user
   protected String _JsonString;
   protected MiniJsonParserState _State;
   protected int _TokenCount;
