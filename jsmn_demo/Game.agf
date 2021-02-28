@@ -3,8 +3,8 @@
 <AGSEditorDocument Version="3.0.3.2" VersionIndex="25" EditorVersion="3.5.0.22">
   <Game>
     <Settings>
-      <GameFileName>jsmn</GameFileName>
-      <GameName>jsmn</GameName>
+      <GameFileName>MiniJsonParser</GameFileName>
+      <GameName>MiniJsonParser</GameName>
       <UniqueID>389559</UniqueID>
       <GUIDAsString>{4d30bb0e-581a-4641-8fc0-74ee449fec78}</GUIDAsString>
       <ColorDepth>TrueColor</ColorDepth>
@@ -76,7 +76,7 @@
       <DeveloperURL />
       <EnhancedSaveGames>False</EnhancedSaveGames>
       <SaveGameFileExtension />
-      <SaveGameFolderName>jsmn</SaveGameFolderName>
+      <SaveGameFolderName>MiniJsonParser</SaveGameFolderName>
       <BinaryFilesInSourceControl>False</BinaryFilesInSourceControl>
       <AudioIndexer>0</AudioIndexer>
       <BuildTargets xml:space="preserve">Windows, Linux</BuildTargets>
@@ -644,6 +644,10 @@
         <UnloadedRooms>
           <UnloadedRoom>
             <Number>1</Number>
+            <Description IsNull="True" />
+          </UnloadedRoom>
+          <UnloadedRoom>
+            <Number>2</Number>
             <Description IsNull="True" />
           </UnloadedRoom>
         </UnloadedRooms>
@@ -2289,7 +2293,7 @@
             <IdleView>0</IdleView>
             <ThinkingView>0</ThinkingView>
             <BlinkingView>0</BlinkingView>
-            <StartingRoom>1</StartingRoom>
+            <StartingRoom>2</StartingRoom>
             <StartX>127</StartX>
             <StartY>142</StartY>
             <UniformMovementSpeed>True</UniformMovementSpeed>
@@ -4613,7 +4617,7 @@
           <ScriptAndHeader>
             <ScriptAndHeader_Header>
               <Script>
-                <FileName>JSON.ash</FileName>
+                <FileName>MiniJsonParser.ash</FileName>
                 <Name />
                 <Description />
                 <Author />
@@ -4624,7 +4628,7 @@
             </ScriptAndHeader_Header>
             <ScriptAndHeader_Script>
               <Script>
-                <FileName>JSON.asc</FileName>
+                <FileName>MiniJsonParser.asc</FileName>
                 <Name />
                 <Description />
                 <Author />
