@@ -1,0 +1,170 @@
+[size=14pt][b]jsonparser[/b][/size] [color=gray][b] version 0.1.0 [/b][/color]
+[url=https://ci.appveyor.com/api/projects/status/ub23w5v2ga96us0m/branch/master?svg=true][img]https://ci.appveyor.com/project/ericoporto/jsonparser/branch/main[/img][/url]
+
+[url=https://github.com/ericoporto/jsonparser/releases/download/0.1.0/jsonparser.scm]Get Latest Release [b]jsonparser.scm[/b][/url] | [url=https://github.com/ericoporto/jsonparser]GitHub Repo[/url] | [url=https://github.com/ericoporto/jsonparser/releases/download/0.1.0/jsonparser_demo_windows.zip]Demo Windows[/url] | [url=https://github.com/ericoporto/jsonparser/releases/download/0.1.0/jsonparser_demo_linux.tar.gz]Demo Linux[/url] | [url=https://github.com/ericoporto/jsonparser/archive/0.1.0.zip] Download project .zip [/url]
+
+I recently found a cool unrelated tool that I wanted to add to my workflow, but the tool output was a json file. There's no good object to represent a JSON object in AGS and I was too lazy to make a plugin.
+So I made a parser! This is a JSON minimal parser for Adventure Game Studio. It's based on JSMN, which is a C JSON parser that had an easy to read code.
+
+It's not well tested, but I thought to "formally" release it here in case someone had a need that it would be enough for it.
+
+[size=14pt][b]Usage[/b][/size]
+[spoiler]
+If you wish to handle things more manually, you can use a thiner parser that is also faster:
+
+[code=ags]  String json_string = "{ \"name\":\"John\", \"age\":30, \"car\":null }";
+  JsonParser* parser = new JsonParser;
+  
+  int token_count = 8;
+  JsonToken* t[] = JsonToken.NewArray(token_count);
+
+  int r = parser.Parse(json_string, t, token_count);
+
+  // now that you have the Tokens, you can use them to parse as you wish!
+  if (r < 0) Display("Failed to parse JSON: %d\n", r);
+  if (r < 1 || t[0].type != eJSON_Tok_OBJECT) Display("Object expected\n");
+
+  for(int i=0; i<r  ; i++){
+    JsonToken* tok = t[i];
+    Display(String.Format("%d ; %s ; %d ; %s ; %d ; %d ; %d", 
+      i, tok.ToString(json_string), tok.size , tok.TypeAsString,  tok.start ,  tok.end ,  tok.parent ));
+  }
+  
+  Display("JSON Parsing has FINISHED for string\n\n%s", json_string);[/code]
+This module also packs a more approacheable (but less tested) parser:
+
+[code=ags]function room_AfterFadeIn()
+{
+  String json_string = "";
+  json_string = json_string.Append("{\"squadName\":\"Super squad\",\"formed\":2016,\"active\":true,\"members\":[");
+  json_string = json_string.Append("{\"name\":\"Molecule Man\",\"age\":29,\"secretIdentity\":\"Dan Jukes\",\"powers\":[\"Radiation resistance\",\"Radiation blast\"]},");
+  json_string = json_string.Append("{\"name\":\"Madam Uppercut\",\"age\":39,\"secretIdentity\":\"Jane Wilson\",\"powers\":[\"Million punch\",\"Super reflexes\"]},");
+  json_string = json_string.Append("{\"name\":\"Eternal Flame\",\"age\":100,\"secretIdentity\":\"Unknown\",\"powers\":[\"Immortality\",\"Heat Immunity\",\"Interdimensional jump\"]}]}");
+
+  MiniJsonParser jp;
+  jp.Init(json_string); // parse json_string and internally generate the tokens
+  
+  while(jp.NextToken()) // advance the current token and exit when there are no tokens left
+  {    
+    if(jp.CurrentTokenIsLeaf)  // usually the interesting information is on the leafs
+    {
+      Display(String.Format("%s: %s", jp.CurrentFullKey, jp.CurrentTokenAsString));
+    }    
+  }
+  
+  Display("JSON Parsing has FINISHED for string\n\n%s", json_string);
+}[/code][/spoiler]
+[size=14pt][b]Script API[/b][/size]
+
+[spoiler]
+[size=12pt][b]JsonParser[/b][/size]
+[b][tt]JsonParser.Parse[/tt][/b]
+[code=ags]int JsonParser.Parse(String json_string, JsonToken *tokens[], int num_tokens)[/code]
+Parses a JSON data string into and array of tokens, each describing a single JSON object. Negative return is a [tt]JsonError[/code], otherwise it's the number of used tokens.
+
+[b][tt]JsonParser.Reset[/tt][/b]
+[code=ags]void JsonParser.Reset()[/code]
+Marks the parser for reset, useful if you want to use it again with a different file. Reset only actually happens when Parse is called.
+
+[b][tt]JsonParser.pos[/tt][/b]
+[code=ags]int JsonParser.pos[/code]
+offset in the JSON string
+
+[b][tt]JsonParser.toknext[/tt][/b]
+[code=ags]int JsonParser.toknext[/code]
+next token to allocate
+
+[b][tt]JsonParser.toksuper[/tt][/b]
+[code=ags]int JsonParser.toksuper[/code]
+superior token node, e.g. parent object or array
+
+[size=12pt][b]JsonToken[/b][/size]
+[b][tt]JsonToken.NewArray[/tt][/b]
+[code=ags]static JsonToken* [] JsonToken.NewArray(int count)[/code]
+Static helper to ease Token Array creation. Ex: [tt]JsonToken* t[] = JsonToken.NewArray(token_count);[/tt]
+
+[b][tt]JsonToken.ToString[/tt][/b]
+[code=ags]String JsonToken.ToString(String json_string)[/code]
+pass the json_string that was parsed and generated this token to recover the string this token refers to
+
+[b][tt]JsonToken.type[/tt][/b]
+[code=ags]JsonTokenType JsonToken.type[/code]
+The type of the token: object, array, string etc.
+
+[b][tt]JsonToken.start[/tt][/b]
+[code=ags]int JsonToken.start[/code]
+The start position in JSON data string.
+
+[b][tt]JsonToken.end[/tt][/b]
+[code=ags]int JsonToken.end[/code]
+The end position in JSON data string.
+
+[b][tt]JsonToken.size[/tt][/b]
+[code=ags]int JsonToken.size[/code]
+The size tells about the direct children of the token, 0 if it's a leaf value, 1 or bigger if it's a key or object/array.
+
+[b][tt]JsonToken.parent[/tt][/b]
+[code=ags]int JsonToken.parent[/code]
+If it's a child, is the index position of the parent in the token array.
+
+[b][tt]JsonToken.TypeAsString[/tt][/b]
+[code=ags]readonly attribute Strin JsonToken.TypeAsString[/code]
+Utility function for debugging, returns the type of the token in a String format.
+
+[size=12pt][b]JsonTokenType[/b][/size]
+- [tt]eJSON_Tok_UNDEFINED[/tt], a valid token should never have this type.
+- [tt]eJSON_Tok_OBJECT[/tt], an object, it holds keys and values, values can be any other type.
+- [tt]eJSON_Tok_ARRAY[/tt], an array, the token will contain direct ordered children.
+- [tt]eJSON_Tok_STRING[/tt], the token is a string, could be a key, could be a value, context is needed.
+- [tt]eJSON_Tok_PRIMITIVE[/tt], the token is either a number (float or integer), a boolean ([tt]true[/tt] or [tt]false[/code]) or [tt]null[/code].
+
+[size=12pt][b]JsonError[/b][/size]
+Used to check parse results.
+- [tt]eJSON_Error_InsuficientTokens[/tt], Not enough tokens were provided. Please use more tokens.
+- [tt]eJSON_Error_InvalidCharacter[/tt], Invalid character inside JSON string. 
+- [tt]eJSON_Error_Partial[/code], The string is not a full JSON packet, more bytes expected.
+
+[size=12pt][b]MiniJsonParser[/b][/size]
+[b][tt]MiniJsonParser.Init[/tt][/b]
+[code=ags]void MiniJsonParser.Init(String json_string)[/code]
+Initialize the parser passing a JSON as a string. Common usage is: [tt]MiniJsonParser jp; jp.Init(json_string);[/tt].
+
+[b][tt]MiniJsonParser.NextToken[/tt][/b]
+[code=ags]bool MiniJsonParser.NextToken()[/code]
+Advances to the next token. Returns false if no tokens left.
+
+[b][tt]MiniJsonParser.CurrentTokenAsString[/code][/b]
+[code=ags]readonly attribute String MiniJsonParser.CurrentTokenAsString[/code]
+The current token content, as a String.
+
+[b][tt]MiniJsonParser.CurrentTokenType[/tt][/b]
+[code=ags]readonly attribute JsonTokenType MiniJsonParser.CurrentTokenType[/code]
+The current token type.
+
+[b][tt]MiniJsonParser.CurrentTokenSize[/tt][/b]
+[code=ags]readonly attribute int MiniJsonParser.CurrentTokenSize[/code]
+The current token size, 0 if it's a leaf value, 1 or bigger if it's a key or object/array.
+
+[b][tt]MiniJsonParser.CurrentState[/tt][/b]
+[code=ags]readonly attribute MiniJsonParserState MiniJsonParser.CurrentState[/code]
+The current state of our mini parser. Helps understanding the JSON tokens we got when parsing.
+
+[b][tt]MiniJsonParser.CurrentFullKey[/tt][/b]
+[code=ags]readonly attribute String MiniJsonParser.CurrentFullKey[/code]
+Gets the current dot separated key.
+
+[b][tt]MiniJsonParser.CurrentTokenIsLeaf[/tt][/b]
+[code=ags]readonly attribute bool MiniJsonParser.CurrentTokenIsLeaf[/code]
+Checks if the state and key type currently are a leaf. True if it's, usually leafs are the interesting tokens we want when parsing.
+
+[size=12pt][b]MiniJsonParserState[/b][/size]
+- [tt]eJP_State_START[/tt], The parser just started.
+- [tt]eJP_State_KEY[/tt], The current token is key in an object.
+- [tt]eJP_State_VALUE[/tt], The current token is a value in an object.
+- [tt]eJP_State_ARRVALUE[/tt], The current token is a value in an array.
+- [tt]eJP_State_STOP[/tt], Don't parse anything in this state, but the parser is not necessarily done.
+[/spoiler]
+
+[size=14pt][b]License[/b][/size]
+
+This code is made by [b]eri0o[/b] and is licensed with MIT [url=https://github.com/ericoporto/jsonparser/blob/main/LICENSE][tt]LICENSE[/tt][/url]. The code on this module is based on Serge's JSMN, which is also MIT licensed and is referenced in the license.
