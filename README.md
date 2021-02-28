@@ -33,8 +33,6 @@ If you wish to handle things more manually, you can use a thiner parser that is 
 This module also packs a more approacheable (but less tested) parser:
 
 ```AGS Script
-function room_AfterFadeIn()
-{
   String json_string = "";
   json_string = json_string.Append("{\"squadName\":\"Super squad\",\"formed\":2016,\"active\":true,\"members\":[");
   json_string = json_string.Append("{\"name\":\"Molecule Man\",\"age\":29,\"secretIdentity\":\"Dan Jukes\",\"powers\":[\"Radiation resistance\",\"Radiation blast\"]},");
@@ -53,7 +51,6 @@ function room_AfterFadeIn()
   }
   
   Display("JSON Parsing has FINISHED for string\n\n%s", json_string);
-}
 ```
 
 ## Script API
