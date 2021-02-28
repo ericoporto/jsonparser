@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<AGSModule>
+  <Name>jsonparser</Name>                      <!-- set the module name -->
+  <Description>A minimal json parser for ags.</Description> <!-- set the module description -->
+  <Author>eri0o</Author>                <!-- set the module author -->
+  <Version>0.1.0</Version>             <!-- set the module version -->
+  <Key>1002780478</Key>                  <!-- set the module unique key -->
+</AGSModule>
