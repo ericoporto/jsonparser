@@ -33,8 +33,7 @@ If you wish to handle things more manually, you can use a thiner parser that is 
   Display("JSON Parsing has FINISHED for string\n\n%s", json_string);[/code]
 This module also packs a more approacheable (but less tested) parser:
 
-[code=ags]function room_AfterFadeIn()
-{
+[code=ags]
   String json_string = "";
   json_string = json_string.Append("{\"squadName\":\"Super squad\",\"formed\":2016,\"active\":true,\"members\":[");
   json_string = json_string.Append("{\"name\":\"Molecule Man\",\"age\":29,\"secretIdentity\":\"Dan Jukes\",\"powers\":[\"Radiation resistance\",\"Radiation blast\"]},");
@@ -52,8 +51,7 @@ This module also packs a more approacheable (but less tested) parser:
     }    
   }
   
-  Display("JSON Parsing has FINISHED for string\n\n%s", json_string);
-}[/code][/spoiler]
+  Display("JSON Parsing has FINISHED for string\n\n%s", json_string);[/code][/spoiler]
 [size=14pt][b]Script API[/b][/size]
 
 [spoiler]
