@@ -112,13 +112,13 @@ Utility function for debugging, returns the type of the token in a String format
 - [tt]eJSON_Tok_OBJECT[/tt], an object, it holds keys and values, values can be any other type.
 - [tt]eJSON_Tok_ARRAY[/tt], an array, the token will contain direct ordered children.
 - [tt]eJSON_Tok_STRING[/tt], the token is a string, could be a key, could be a value, context is needed.
-- [tt]eJSON_Tok_PRIMITIVE[/tt], the token is either a number (float or integer), a boolean ([tt]true[/tt] or [tt]false[/code]) or [tt]null[/code].
+- [tt]eJSON_Tok_PRIMITIVE[/tt], the token is either a number (float or integer), a boolean ([tt]true[/tt] or [tt]false[/tt]) or [tt]null[/tt].
 
 [size=12pt][b]JsonError[/b][/size]
 Used to check parse results.
 - [tt]eJSON_Error_InsuficientTokens[/tt], Not enough tokens were provided. Please use more tokens.
 - [tt]eJSON_Error_InvalidCharacter[/tt], Invalid character inside JSON string. 
-- [tt]eJSON_Error_Partial[/code], The string is not a full JSON packet, more bytes expected.
+- [tt]eJSON_Error_Partial[/tt], The string is not a full JSON packet, more bytes expected.
 
 [size=12pt][b]MiniJsonParser[/b][/size]
 [b][tt]MiniJsonParser.Init[/tt][/b]
