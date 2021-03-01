@@ -56,7 +56,9 @@ Display("JSON Parsing has FINISHED for string\n\n%s", json_string);[/code][/spoi
 [size=12pt][b]JsonParser[/b][/size]
 [b][tt]JsonParser.Parse[/tt][/b]
 [code=ags]int JsonParser.Parse(String json_string, JsonToken *tokens[], int num_tokens)[/code]
-Parses a JSON data string into and array of tokens, each describing a single JSON object. Negative return is a [tt]JsonError[/code], otherwise it's the number of used tokens.
+Parses a JSON data string into and array of tokens, each describing a single JSON object. Negative return is a [tt]JsonError[/tt], otherwise it's the number of used tokens.
+
+You need to preallocate a number of tokens to be used by this method before calling it. Use [tt]JsonToken.NewArray(count)[/tt] to help you. 
 
 [b][tt]JsonParser.Reset[/tt][/b]
 [code=ags]void JsonParser.Reset()[/code]
@@ -104,7 +106,7 @@ The size tells about the direct children of the token, 0 if it's a leaf value, 1
 If it's a child, is the index position of the parent in the token array.
 
 [b][tt]JsonToken.TypeAsString[/tt][/b]
-[code=ags]readonly attribute Strin JsonToken.TypeAsString[/code]
+[code=ags]readonly attribute String JsonToken.TypeAsString[/code]
 Utility function for debugging, returns the type of the token in a String format.
 
 [size=12pt][b]JsonTokenType[/b][/size]
