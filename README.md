@@ -53,6 +53,8 @@ This module also packs a more approacheable (but less tested) parser:
   Display("JSON Parsing has FINISHED for string\n\n%s", json_string);
 ```
 
+An [in-game usage is here](https://github.com/ericoporto/manamatch/blob/32d4300039d03c743db0bc1ca59ee92d2b0b5f15/manamatch/Board.asc#L131).
+
 ## Script API
 
 ### JsonParser
